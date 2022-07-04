@@ -5,6 +5,11 @@ h1{
 
 body{
     background-color: gold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
 p{
@@ -15,8 +20,23 @@ p{
 #game{
  border: 1px solid black;
  padding: 20px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
 }
 
 button{
     cursor: pointer;
+    margin: 20px;
 }
+
+.resultat {
+    border : solid black 1px;
+    height : 50px;
+    text-align : center;
+    font-weight: bold;
+    padding : 10px;
+  }
+
+
+

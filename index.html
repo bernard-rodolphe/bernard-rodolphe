@@ -10,15 +10,105 @@
     <title>Petit jeu</title>
 </head>
 <body>
-    <h1> Feuille, papier, ciseaux</h1>
+    <h1> Pierre, papier, ciseaux</h1>
    
-    <p><strong> Appelé également chifoumi, les deux joueurs choisissent simultanément un des trois coups possibles en le symbolisant de la main.</strong> </p>
+    <p><strong> Appelé également "Shifumi", les deux joueurs choisissent simultanément un des trois coups possibles en le symbolisant de la main.</strong> </p>
     <p><strong> La pierre bat les ciseaux, les ciseaux battent la feuille et la feuille bat la pierre.</strong></p>
-    
-    <div id="game">
-        <button class="feuille">Feuille</button>
-        <button class="papier">Papier</button>
-        <button class="ciseaux">Ciseaux</button>
+    <div class='score'>
+
     </div>
+    <div class='message'>
+
+    </div>
+        <button>Pierre</button>
+        <button>Papier</button>
+        <button>Ciseaux</button>
+        <script>
+            const message = document.querySelector('.message');
+            const score = document.querySelector('.score');
+            const buttons = document.querySelectorAll('button');
+            const winnerScores = [0,0];
+            
+            //add event listeners to buttons
+            for ( let i = 0 ; i < buttons.length ; i++){
+                buttons[i].addEventListener('click', playGame);
+            }
+    
+            function playGame(e){
+                //setup player's selection
+                let playerSelection = e.target.innerText;
+                //setup a random number to select for computer
+                //selects a number between 0 and 1 (1 not-inclusive)
+                let computerSelection = Math.random();
+    
+                //if computerSelection is less than .34, computer selects Rock
+                if (computerSelection < .34){
+                    computerSelection = 'Pierre';
+                } else if (computerSelection <= .67){
+                    computerSelection = 'Papier';
+                } else {
+                    computerSelection = 'Ciseaux';
+                }
+                
+                //setup a function to compare winners and return result
+                let result = checkWinner(playerSelection, computerSelection);
+    
+                //output scores to the DOM
+                if (result === 'Joueur'){
+                    result += ' Gagné !';
+                    //update score
+                    winnerScores[0]++;
+                }
+    
+                if (result === 'Ordinateur'){
+                    result += ' Gagné !';
+                    winnerScores[1]++;
+                }
+    
+                if (result === 'Egalité'){
+                    result += '.Revanche ?'
+                }
+    
+                //output score into Score DIV
+                score.innerHTML = 'Joueur: [ ' + winnerScores[0]+ ' ] Ordinateur: [ ' + winnerScores[1] + ' ]';
+    
+                //output player and computer's selections
+                messenger('Joueur: <strong>' + playerSelection + '</strong> Ordinateur: <strong>' + computerSelection + '</strong><br>' + result);
+            }
+    
+            function messenger(selectionMessage){
+                message.innerHTML = selectionMessage;
+            }
+    
+            function checkWinner(player, computer){
+                if (player === computer){
+                    return 'Egalité';
+                }
+    
+                if (player === 'Pierre'){
+                    if(computer === 'Papier'){
+                        return 'Ordinateur';
+                    } else {
+                        return 'Joueur';
+                    }
+                }
+    
+                if (player === 'Papier'){
+                    if (computer === 'Ciseaux'){
+                        return 'Ordinateur';
+                    } else {
+                        return 'Joueur';
+                    }
+                }
+    
+                if (player === 'Ciseaux'){
+                    if (computer === 'Pierre'){
+                        return 'Ordinateur';
+                    } else {
+                        return 'Joueur';
+                    }
+                }
+            }
+        </script>
 </body>
 </html>
